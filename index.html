@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        /* min-height: 100%; */
+        z-index: -1;
+        background-repeat: no-repeat; /* Prevents tiling */
+        background-attachment: fixed; /* Keeps the gradient fixed during scrolling */
+        background-size: cover; /* Ensures gradient stretches to cover the entire viewport */
+        background-position: center; /* Centers the gradient */
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .carousel {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .carousel img {
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .carousel img:first-child {
+        opacity: 1;
+      }
+
+      .left-arrow,
+      .right-arrow {
+        position: absolute;
+        bottom: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      .left-arrow {
+        left: 20px;
+      }
+
+      .right-arrow {
+        right: 20px;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="relative">
+    <!-- <img src="./images/PageOne.png" alt="" id="bg"> -->
+    <nav class="bg-[#070E2B]">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div class="relative flex h-16 items-center justify-between">
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <!-- Mobile menu button-->
+              <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="absolute -inset-0.5"></span>
+                <span class="sr-only">Open main menu</span>
+                <!--
+                  Icon when menu is closed.
+      
+                  Menu open: "hidden", Menu closed: "block"
+                -->
+                <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+                <!--
+                  Icon when menu is open.
+      
+                  Menu open: "block", Menu closed: "hidden"
+                -->
+                <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-1 items-center justify-center sm:items-stretch ju sm:justify-start">
+              <div class="flex shrink-0 items-center">
+                <img class="h-8 w-auto" src="https://i.pinimg.com/originals/52/b4/9a/52b49ab47ba026d0e01eb3346c0e029a.png" alt="Your Company">
+              </div>
+              <div class="hidden sm:ml-6 sm:block ">
+                <div class="flex justify-center">
+                  <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                  <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a>
+                  <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
+                  <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
+                  <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+                </div>
+              </div>
+            </div>
+            <a href="./login.html">
+                <button class="bg-white hover:bg-gray-700 text-[#070E2B] hover:text-white font-bold py-2 px-4 rounded-full">
+                    SIGN UP
+                  </button>
+            </a>
+           
+          </div>
+        </div>
+      
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="sm:hidden" id="mobile-menu">
+          <div class="space-y-1 px-2 pb-3 pt-2">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a>
+            <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
+            <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
+            <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+          </div>
+        </div>
+      </nav>
+    <div class="carousel">
+      <img src="./images/PageOne.png" alt="Image 1" />
+      <img src="./images/PageTwo.png" alt="Image 2" />
+      <img src="./images/PageThree.png" alt="Image 3" />
+      <button class="left-arrow rotate-180">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <button class="right-arrow">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <script>
+      // Select elements
+      const images = document.querySelectorAll(".carousel img");
+      const leftArrow = document.querySelector(".left-arrow");
+      const rightArrow = document.querySelector(".right-arrow");
+
+      let currentIndex = 0;
+      const totalImages = images.length;
+      const intervalTime = 3000; // 3 seconds
+      let slideInterval;
+
+      // Function to show the current image
+      function showImage(index) {
+        images.forEach((img, i) => {
+          img.style.opacity = i === index ? "1" : "0";
+        });
+      }
+
+      // Show next image
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % totalImages;
+        showImage(currentIndex);
+      }
+
+      // Show previous image
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+        showImage(currentIndex);
+      }
+
+      // Start automatic slider
+      function startSlider() {
+        slideInterval = setInterval(nextImage, intervalTime);
+      }
+
+      // Pause slider on arrow click
+      function pauseSlider() {
+        clearInterval(slideInterval);
+      }
+
+      // Event listeners for arrows
+      rightArrow.addEventListener("click", () => {
+        pauseSlider();
+        nextImage();
+        startSlider();
+      });
+
+      leftArrow.addEventListener("click", () => {
+        pauseSlider();
+        prevImage();
+        startSlider();
+      });
+
+      // Initialize
+      showImage(currentIndex);
+      startSlider();
+    </script>
+  </body>
+</html>
